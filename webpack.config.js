@@ -17,7 +17,7 @@ module.exports = {
     },
     output: {
         filename: 'app.js',
-        path: path.resolve(__dirname, 'static'),
+        path: path.resolve(__dirname, 'docs'),
     },
     devtool: 'inline-source-map'
 };
