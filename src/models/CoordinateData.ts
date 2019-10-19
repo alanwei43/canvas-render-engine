@@ -7,17 +7,20 @@ export class CoordinateData {
     }
     pos: PositionData
     size: SizeData
+    private getSize(): SizeData {
+        return this.size || { height: 0, width: 0 };
+    }
     getLeftTopPos(): PositionData {
         return this.pos;
     }
     getLeftBottomPos(): PositionData {
-        return { x: 0, y: this.pos.y + this.size.height || 0 };
+        return { x: this.pos.x, y: this.pos.y + this.getSize().height };
     }
     getRightTopPos(): PositionData {
-        return { x: this.pos.x + this.size.width || 0, y: this.pos.y };
+        return { x: this.pos.x + this.getSize().width, y: this.pos.y };
     }
     getRightBottomPos(): PositionData {
-        return { x: this.pos.x + this.size.width || 0, y: this.pos.y + this.size.height || 0 };
+        return { x: this.pos.x + this.getSize().width, y: this.pos.y + this.getSize().height };
     }
     increaseX(value: number): CoordinateData {
         this.pos.x += value;
