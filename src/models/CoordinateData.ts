@@ -22,6 +22,9 @@ export class CoordinateData {
     getRightBottomPos(): PositionData {
         return { x: this.pos.x + this.getSize().width, y: this.pos.y + this.getSize().height };
     }
+    getCenterPos(): PositionData {
+        return { x: this.pos.x + (this.size.width / 2), y: this.pos.y - (this.size.height / 2) };
+    }
     increaseX(value: number): CoordinateData {
         this.pos.x += value;
         return this;
