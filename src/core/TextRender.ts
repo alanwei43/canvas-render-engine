@@ -1,10 +1,18 @@
-import { DrawText, RenderStringResult } from "../models/index";
+import { DrawText, RenderCoordsResult, CoordinateData } from "../models/index";
 import { CoreRender } from "./CoreRender";
-export class TextRender extends CoreRender<DrawText, RenderStringResult> {
-    async render(): Promise<RenderStringResult> {
+export class TextRender extends CoreRender<DrawText, RenderCoordsResult> {
+    async render(): Promise<RenderCoordsResult> {
         this.updateFont(this.data.font);
         this.updateFillStyle(this.data.fill);
+
+        const textWidth = this.context.measureText(this.data.font.text).width;
         this.context.fillText(this.data.font.text, this.data.pos.x, this.data.pos.y);
-        return Promise.resolve({ success: true });
+        const result: RenderCoordsResult = {
+            success: true, result: new CoordinateData(this.data.pos, {
+                height: this.data.font.size,
+                width: textWidth
+            })
+        };
+        return Promise.resolve(result);
     }
 }
