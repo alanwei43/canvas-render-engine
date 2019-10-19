@@ -1,0 +1,29 @@
+{
+  "name": "canvas-render-engine",
+  "version": "1.0.0",
+  "description": "Canvas render enging",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alanwei43/canvas-render-engine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alanwei43/canvas-render-engine/issues"
+  },
+  "homepage": "https://github.com/alanwei43/canvas-render-engine#readme",
+  "devDependencies": {
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "express": "^4.17.1"
+  }
+}
