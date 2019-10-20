@@ -11,10 +11,15 @@ export class TextRender extends CoreRender<DrawText, RenderCoordsResult> {
             this.data.pos.x -= textWidth;
         }
 
-        this.context.fillText(this.data.font.text, this.data.pos.x, this.data.pos.y);
+        const destY = this.data.pos.y + this.data.font.size;
+
+        this.context.fillText(this.data.font.text, this.data.pos.x, destY);
         const result: RenderCoordsResult = {
             success: true,
-            result: new CoordinateData(this.data.pos, {
+            result: new CoordinateData({
+                x: this.data.pos.x,
+                y: this.data.pos.y
+            }, {
                 height: this.data.font.size,
                 width: textWidth
             })

@@ -1,5 +1,5 @@
 import { IRender } from "./IRender";
-import { ChainItem, GetRenderChainParams  } from "../models/index";
+import { ChainItem, GetRenderChainParams } from "../models/index";
 
 export class RenderChain<TResult> {
     private renders: ChainItem<TResult>[] = []
@@ -16,7 +16,7 @@ export class RenderChain<TResult> {
     async execute(): Promise<string> {
         return this.renders.reduce((prev, next) => {
             return prev.then(() => {
-                return next.getRender({chain: this}).render().then(result => {
+                return next.getRender({ chain: this }).render().then(result => {
                     next.renderResult = result;
                     return "ok";
                 }).catch(() => "fail");
