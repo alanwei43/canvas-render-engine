@@ -1,3 +1,3 @@
-export interface IRender<TData, TResult> {
+export interface IRender<TResult> {
     render(): Promise<TResult>;
 }

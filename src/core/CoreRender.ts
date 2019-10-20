@@ -1,7 +1,7 @@
 import { FontStyle, FillStyle } from "../models/Draw";
 import { IRender } from "./IRender";
 
-export abstract class CoreRender<TData, TResult> implements IRender<TData, TResult> {
+export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
     protected context: CanvasRenderingContext2D
     protected data: TData
 

@@ -5,3 +5,4 @@ export * from "./DrawText";
 export * from "./RenderResult";
 export * from "./CoordinateData"
 export * from "./DrawLine";
+export * from "./RenderChainModels";
