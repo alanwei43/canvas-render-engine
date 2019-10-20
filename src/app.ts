@@ -1,5 +1,5 @@
 import { RectRender, TextRender, ImageRender, CoreRender, LineRender, IRender, RenderChain } from "./core/index";
-import { CoordinateData, RenderCoordsResult, DrawImage, DrawLine } from "./models/index";
+import { CoordinateData, RenderCoordsResult, DrawImage, DrawLine, DrawRect } from "./models/index";
 
 const canvas1: HTMLCanvasElement = document.querySelector("#canvas1");
 const context = canvas1.getContext("2d");
@@ -16,7 +16,7 @@ chain.push(params => new ImageRender(context, {
         srcCoords: new CoordinateData({ x: 0, y: 0 }),
         destCoords: new CoordinateData({ x: 10, y: 8 })
     });
-}).push(params => {
+}, "logo").push(params => {
     const response = chain.getLastRenderResultById("main-image");
     const pos = response.result.getRightBottomPos();
     const textRender = new TextRender(context, {
@@ -25,8 +25,16 @@ chain.push(params => new ImageRender(context, {
     });
     textRender.textRightAlign = true;
     return textRender;
+}, "title").push(params => {
+const logoResult = params.chain.getLastRenderResultById("logo").result;
+    const data = new DrawRect();
+    data.pos = logoResult.pos;
+    data.size = logoResult.size;
+    data.stroke = { color: "gray" };
+    console.log();
+    return new RectRender(context, data);
 }).push(params => {
-    const response = chain.lastRenderResult;
+    const response = params.chain.getLastRenderResultById("title");
     const pos = response.result.getRightBottomPos();
     const textRender = new TextRender(context, {
         pos: { x: pos.x - 50, y: pos.y + 15 },
@@ -49,7 +57,10 @@ chain.push(params => new ImageRender(context, {
     const data: DrawLine = new DrawLine();
     data.positions = [
         { x: 250, y: response.result.getCenterPos().y + 2 },
-        { x: 295, y: response.result.getCenterPos().y + 2 }];
+        { x: 295, y: response.result.getCenterPos().y + 2 }
+    ];
+    data.stroke = { color: "#999" };
+    data.lineWidth = 0.5;
     return new LineRender(context, data);
 });
 chain.execute();

@@ -2,7 +2,10 @@ export interface PositionData {
     x: number
     y: number
 }
-export class FillStyle {
+export interface FillStyle {
+    color: string
+}
+export interface StrokeStyle {
     color: string
 }
 

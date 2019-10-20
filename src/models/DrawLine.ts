@@ -1,8 +1,9 @@
-import { PositionData } from "./Draw";
+import { PositionData, StrokeStyle, FillStyle } from "./Draw";
 
 export class DrawLine {
     positions: PositionData[]
     closePath: boolean = true
-    stroke: boolean = true
-    fill: boolean = false
+    lineWidth?: number
+    stroke?: StrokeStyle
+    fill?: FillStyle
 }

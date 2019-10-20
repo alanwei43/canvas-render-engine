@@ -1,6 +1,7 @@
-import { PositionData, FillStyle, SizeData } from "./Draw"
+import { PositionData, FillStyle, SizeData, StrokeStyle } from "./Draw"
 export class DrawRect {
     pos: PositionData;
     size: SizeData;
     fill?: FillStyle;
+    stroke?: StrokeStyle
 }

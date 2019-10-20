@@ -1,4 +1,4 @@
-import { FontStyle, FillStyle } from "../models/Draw";
+import { FontStyle, FillStyle, StrokeStyle } from "../models/Draw";
 import { IRender } from "./IRender";
 
 export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
@@ -16,7 +16,7 @@ export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
         }
         this.data = data;
     }
-    protected updateFont(font: FontStyle) {
+    protected updateFont(font: FontStyle): void {
         let value: string = "";
         if (font.size) {
             value += font.size + "px";
@@ -26,9 +26,18 @@ export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
         }
         this.context.font = value;
     }
-    protected updateFillStyle(fillStyle: FillStyle) {
-        if (fillStyle && fillStyle.color) {
-            this.context.fillStyle = fillStyle.color;
+    protected updateFillStyle(fill: FillStyle): boolean {
+        if (fill) {
+            this.context.fillStyle = fill.color;
+            return true;
         }
+        return false;
+    }
+    protected updateStrokeStyle(stroke: StrokeStyle): boolean {
+        if (stroke) {
+            this.context.strokeStyle = stroke.color;
+            return true;
+        }
+        return false;
     }
 }
