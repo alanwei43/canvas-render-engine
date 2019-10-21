@@ -1,8 +1,8 @@
-import { DrawText, RenderCoordsResult, CoordinateData } from "../models/index";
+import { DrawText, RenderCoordsResult, CoordinateData, DrawType } from "../models/index";
 import { CoreRender } from "./CoreRender";
 export class TextRender extends CoreRender<DrawText, RenderCoordsResult> {
     textRightAlign: boolean = false
-    async render(): Promise<RenderCoordsResult> {
+    async doRender(): Promise<RenderCoordsResult> {
         this.updateFont(this.data.font);
         this.updateFillStyle(this.data.fill);
 
@@ -13,7 +13,9 @@ export class TextRender extends CoreRender<DrawText, RenderCoordsResult> {
 
         const destY = this.data.pos.y + this.data.font.size;
 
-        this.context.fillText(this.data.font.text, this.data.pos.x, destY);
+        if (this.data.drawType === DrawType.Fill) {
+            this.context.fillText(this.data.font.text, this.data.pos.x, destY);
+        }
         const result: RenderCoordsResult = {
             success: true,
             result: new CoordinateData({

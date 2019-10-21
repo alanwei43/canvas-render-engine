@@ -19,3 +19,8 @@ export interface SizeData {
     width: number
     height: number
 }
+export enum DrawType {
+    Stroke,
+    Fill,
+    None
+}

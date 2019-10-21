@@ -1,5 +1,5 @@
 import { RectRender, TextRender, ImageRender, CoreRender, LineRender, IRender, RenderChain } from "./core/index";
-import { CoordinateData, RenderCoordsResult, DrawImage, DrawLine, DrawRect, DrawText } from "./models/index";
+import { CoordinateData, RenderCoordsResult, DrawImage, DrawLine, DrawRect, DrawText, DrawType } from "./models/index";
 
 const canvas1: HTMLCanvasElement = document.querySelector("#canvas1");
 const context = canvas1.getContext("2d");
@@ -17,64 +17,70 @@ chain.push(params => new ImageRender(context, {
         destCoords: new CoordinateData({ x: 10, y: 8 })
     });
 }, "logo").push(params => {
-    const response = chain.getLastRenderResultById("main-image");
+    const response = chain.getRenderResultById("main-image");
     const pos = response.result.getRightBottomPos();
     const textRender = new TextRender(context, {
         pos: { x: pos.x - 5, y: pos.y + 12 },
-        font: { text: "大众 凌渡 280TSI DSG舒适版国VI", size: 14, family: "sans-serif" }
+        font: { text: "大众 凌渡 280TSI DSG舒适版国VI", size: 14, family: "sans-serif" },
+        drawType: DrawType.Fill
     });
     textRender.textRightAlign = true;
     return textRender;
 }, "title").push(params => {
-    const logoResult = params.chain.getLastRenderResultById("logo").result;
+    const logoResult = params.chain.getRenderResultById("logo").result;
     const data = new DrawRect();
     data.pos = logoResult.pos;
     data.size = logoResult.size;
     data.stroke = { color: "gray" };
     return new RectRender(context, data);
 }, "rect").push(params => {
-    const response = params.chain.getLastRenderResultById("title");
+    const response = params.chain.getRenderResultById("title");
     const pos = response.result.getRightBottomPos();
     const textRender = new TextRender(context, {
-        pos: { x: pos.x, y: pos.y + 5 },
+        pos: { x: pos.x, y: pos.y + 10 },
         font: { text: "18.00万", size: 12, family: "sans-serif" },
-        fill: { color: "gray" }
+        fill: { color: "gray" },
+        drawType: DrawType.Fill
     });
     textRender.textRightAlign = true;
     return textRender;
 }, "small-price").push(params => {
-    const response = params.chain.getLastRenderResultById("small-price");
-    const pos = response.result.getRightBottomPos();
+    const smallPriceResult = params.chain.getRenderResultById("small-price").result;
+    const smallPricePos = smallPriceResult.getLeftBottomPos();
+    const titleResult = params.chain.getRenderResultById("title").result;
+    const titlePos = titleResult.getRightBottomPos();
+
     const textRender = new TextRender(context, {
-        pos: { x: pos.x, y: pos.y },
+        pos: { x: smallPricePos.x - 5, y: titlePos.y + 5 },
         font: { text: "12.48万", size: 18, family: "sans-serif" },
-        fill: { color: "red" }
+        fill: { color: "red" },
+        drawType: DrawType.Stroke
     });
     textRender.textRightAlign = true;
     return textRender;
 }, "large-price").push(params => {
-    const response = params.chain.getLastRenderResultById("small-price");
-    console.log(response);
+    const smallPriceResult = params.chain.getRenderResultById("small-price").result;
     const data: DrawLine = new DrawLine();
     data.positions = [
-        response.result.getLeftTopPos(),
-        response.result.getRightTopPos(),
-        response.result.getRightBottomPos(),
-        response.result.getLeftBottomPos()
+        { x: smallPriceResult.getLeftTopPos().x, y: smallPriceResult.getCenterPos().y + 2 },
+        { x: smallPriceResult.getRightBottomPos().x, y: smallPriceResult.getCenterPos().y + 2 }
     ];
     data.stroke = { color: "#999" };
     data.lineWidth = 0.5;
     return new LineRender(context, data);
 }).push(params => {
-    const data = new DrawText();
-    data.pos = { x: 0, y: 0 };
-    data.font = { text: "Alan", size: 12 };
-    return new TextRender(context, data);
-}, "test-font");
+    const data: DrawLine = new DrawLine();
+    data.positions = [{
+        x: 0, y: 0
+    }, {
+        x: 10, y: 10
+    }];
+    return new LineRender(context, data);
+}, "splitor");
 
 chain.execute().then(() => {
-    const result = chain.getLastRenderResultById("large-price").result;
-    console.log(result.toString());
+    const result = chain.getRenderResultById("large-price").result;
+    // console.log(result.toJSON());
     // const result = chain.getLastRenderResultById("rect").result;
     // const center = result.getCenterPos();
     // context.fillStyle = "red";

@@ -35,7 +35,7 @@ export class RenderChain<TResult> {
         }
         return result.renderResult;
     }
-    getLastRenderResultById(id: string): TResult {
+    getRenderResultById(id: string): TResult {
         const result = this.renderResults.filter(item => item.id === id)[0];
         if (!result) {
             return null;

@@ -1,15 +1,11 @@
 import { CoreRender } from "./CoreRender";
-import { RenderCoordsResult, DrawLine } from "../models/index";
+import { RenderCoordsResult, DrawLine, DrawType } from "../models/index";
 
 export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
-    render(): Promise<RenderCoordsResult> {
-        let call = this.context.stroke;
-        if (this.updateFillStyle(this.data.fill)) {
-            call = this.context.fill;
-        }
-        if (this.updateStrokeStyle(this.data.stroke)) {
-            call = this.context.stroke;
-        }
+    doRender(): Promise<RenderCoordsResult> {
+        this.updateFillStyle(this.data.fill);
+        this.updateStrokeStyle(this.data.stroke)
+
         if (typeof this.data.lineWidth === "number") {
             this.context.lineWidth = this.data.lineWidth;
         }
@@ -24,7 +20,13 @@ export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
         if (this.data.closePath) {
             this.context.closePath();
         }
-        call.apply(this.context);
+
+        if (this.data.drawType === DrawType.Fill) {
+            this.context.fill();
+        }
+        if (this.data.drawType === DrawType.Stroke) {
+            this.context.stroke();
+        }
         return Promise.resolve(new RenderCoordsResult());
     }
 }

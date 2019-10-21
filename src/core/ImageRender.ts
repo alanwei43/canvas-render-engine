@@ -1,7 +1,7 @@
 import { CoreRender } from "./CoreRender";
 import { DrawImage, RenderCoordsResult } from "../models/index";
 export class ImageRender extends CoreRender<DrawImage, RenderCoordsResult> {
-    async render(): Promise<RenderCoordsResult> {
+    async doRender(): Promise<RenderCoordsResult> {
         const img = new Image();
         img.src = this.data.src;
         return new Promise((resolve, reject) => {

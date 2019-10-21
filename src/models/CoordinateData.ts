@@ -34,7 +34,7 @@ export class CoordinateData {
         return this;
     }
 
-    toString(): string {
+    toJSON(): string {
         return JSON.stringify({
             pos: this.pos,
             size: this.size,

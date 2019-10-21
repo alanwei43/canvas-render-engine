@@ -5,7 +5,12 @@ export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
     protected context: CanvasRenderingContext2D
     protected data: TData
 
-    abstract render(): Promise<TResult>
+    abstract doRender(): Promise<TResult>
+    public async render(): Promise<TResult> {
+        console.log(typeof this.data);
+        const renderResult: TResult = await this.doRender();
+        return renderResult;
+    }
 
     constructor(element: HTMLCanvasElement | CanvasRenderingContext2D, data: TData) {
         if (element instanceof HTMLCanvasElement) {
