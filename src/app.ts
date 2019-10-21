@@ -142,29 +142,22 @@ chain.push(params => new ImageRender(context, {
         fillStyle: "#f5594e",
         drawType: DrawType.Fill,
     });
+}).push(params => {
+    const renderResult = params.chain.getRenderResultById("main-image").result;
+    return new ImageRender(context, {
+        src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8CAYAAACrHtS+AAADFklEQVR4nO2WS27FMAwDc/9Lt/ugBeSQluhkCHinD8XJA951XddPwlNUnef24t7b9MYNABzgawI4wKXgp/aOAO+QEpRSV+11f7juD1y8LcNIR121F+ANRjrqqr0AbzDSUVftBXiDkY66au/ngb85gA5/yl53zgBv8AdwgJfrAC4I4ABv8QfwrACsOw64N8PIYAAAnzAyGADAJ4wMBgDwCSODAQB8wog7vI55h37gGUaqAjjAy71TXgAO8HIdwAG+H7hb7gCSepV73QI4wAHu7lXudQvgAAe4u1e5160S8KmnBHVi3eAbN3AEIIADHOAABzjA04D/6TBY7o+qukOpS1K+w5sArinf4U0A15Tv8CaAa8p3eBPANV1KgE9DntrRIbe/DXUAdwrgRXMABzjA99QB3KnjgCvDFCk73B9axx2DewEO8M3m3DsADvByHcAbzLl3ANz8L33D0pG6am/6E+8A+GlPvAPgpz3xDoCf9sQ7AH7aE+/wLVXUsde9ww3ILYADHOAAB3jLPIADXLptwZ8PeMexU/46PLv9ARzgAHfvUOYBXDjW7Q/g5kDd4bn9fQq4clhH75Q67t1QB/CnAjjA7b0ADxLAAW7v3Q68Oiz92K95XugH+Bs8A/xjngH+Mc8A/5jnGOAdAaTDTdoBcLPn9B0AN3tO3wFws+f0HQA3e07fUQK+MOwVMBQvHbmI+QH8qQAOcIADHOAAnwTuOn6H3AFMAVLutf9gJIebBXCA2+sAHiSAA9xe9zngHSE8NZwUcrXXXbfhzcMG+JoXgAsCOMABDvAXA+9QB7RqneLl0I8P4ADfLIDX5wFcmAdwgANcMbLBXPSHkfQW7gC4816Am4NXBHCA2+8FuDl4RQB/CXD3h6FoEGT1AdwpgBfnddR1CODFeR11HQJ4cV5HXYcAXpyn1Cmek+a5ewEePs/dC/Dwee5egIfPc/cCPHyeu/cxcLemgCu97g/cvWNhL8ArvQAXBHCAS3UdvQAXBPAg4FNPgeYOqkODWc/DBjjA/w1FCS9JAC+GooSXJIAXQ1HCS9JUzr/WYmyK3t9blgAAAABJRU5ErkJggg==",
+        srcCoords: new CoordinateData({ x: 0, y: 0 }),
+        destCoords: new CoordinateData({
+            x: renderResult.getLeftBottomPos().x + 5, y: renderResult.getLeftBottomPos().y
+        }, {
+            width: 70,
+            height: 70
+        })
+    })
 });
 
+const start = Date.now();
 chain.execute().then(() => {
-    const result = chain.getRenderResultById("sub-title").result;
-    // new LineRender(context, {
-    //     drawType: DrawType.Stroke,
-    //     positions:[
-    //         result.getLeftTopPos(),
-    //         result.getRightTopPos(),
-    //         result.getRightBottomPos(),
-    //         result.getLeftBottomPos()
-    //     ],
-    //     lineWidth: 1,
-    //     strokeStyle: "#aaa",
-    //     closePath: true
-    // }).render();
-    // console.log(result.toJSON());
-    // const result = chain.getLastRenderResultById("rect").result;
-    // const center = result.getCenterPos();
-    // context.fillStyle = "red";
-    // context.strokeStyle = "red";
-    // context.beginPath();
-    // context.arc(center.x, center.y, result.size.height / 2, 0, Math.PI * 2, false);
-    // context.closePath();
-    // context.stroke();
+    const end = Date.now();
+    console.log(`time: ${(end - start) / 1000}s`);
 });
