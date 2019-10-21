@@ -7,6 +7,7 @@ export class CoordinateData {
     }
     pos: PositionData
     size: SizeData
+    data?: any
     private getSize(): SizeData {
         return this.size || { height: 0, width: 0 };
     }
@@ -33,7 +34,10 @@ export class CoordinateData {
         this.pos.y += value;
         return this;
     }
-
+    static init(start: PositionData, end: PositionData): CoordinateData {
+        const size: SizeData = { width: end.x - start.x, height: end.y - start.y };
+        return new CoordinateData(start, size);
+    }
     toJSON(): string {
         return JSON.stringify({
             pos: this.pos,

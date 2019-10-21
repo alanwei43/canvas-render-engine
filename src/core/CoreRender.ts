@@ -5,7 +5,7 @@ export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
     protected context: CanvasRenderingContext2D
     protected data: TData
 
-    abstract doRender(): Promise<TResult>
+    protected abstract doRender(): Promise<TResult>
     public async render(): Promise<TResult> {
         const renderResult: TResult = await this.doRender();
 

@@ -6,6 +6,7 @@ export interface FontStyle {
     size?: number
     family?: string
     text: string
+    align?: TextAlignType 
 }
 
 export interface SizeData {
@@ -14,8 +15,12 @@ export interface SizeData {
 }
 export enum DrawType {
     Stroke,
-    Fill,
-    None
+    Fill
+}
+export enum TextAlignType{
+    Center,
+    Right,
+    Left
 }
 export class StrokeFillStyleMix {
     fillStyle?: string

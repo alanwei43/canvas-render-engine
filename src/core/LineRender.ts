@@ -18,7 +18,6 @@ export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
             }
         });
         if (this.data.closePath) {
-            console.log("this.data.closePath: ", this.data.closePath);
             this.context.closePath();
         }
 
@@ -54,6 +53,7 @@ export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
             x: maxPosX,
             y: maxPosY
         });
+        renderResult.result.data = this.data;
         return Promise.resolve(renderResult);
     }
 }

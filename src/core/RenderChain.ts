@@ -1,10 +1,10 @@
 import { IRender } from "./IRender";
-import { ChainItem, GetRenderChainParams } from "../models/index";
+import { ChainItem, RenderChainParams } from "../models/index";
 
 export class RenderChain<TResult> {
     private renders: ChainItem<TResult>[] = []
     push(
-        render: (params: GetRenderChainParams<TResult>) => IRender<TResult>,
+        render: (params: RenderChainParams<TResult>) => IRender<TResult>,
         id?: string
     ): RenderChain<TResult> {
         if (!id) {
