@@ -2,7 +2,10 @@ const path = require('path');
 
 module.exports = {
     mode: "production",
-    entry: './src/app.ts',
+    entry: {
+        "code-sample": "./src/code-sample.ts", 
+        "directive-sample": "./src/directive-sample.ts"
+    },
     module: {
         rules: [
             {
@@ -16,7 +19,7 @@ module.exports = {
         extensions: ['.ts', '.js'],
     },
     output: {
-        filename: 'app.js',
+        filename: "[name].js",
         path: path.resolve(__dirname, 'docs'),
     },
     devtool: 'inline-source-map'
