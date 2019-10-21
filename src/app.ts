@@ -54,7 +54,7 @@ chain.push(params => new ImageRender(context, {
         pos: { x: smallPricePos.x - 5, y: titlePos.y + 5 },
         font: { text: "12.48万", size: 18, family: "sans-serif" },
         fill: { color: "red" },
-        drawType: DrawType.Stroke
+        drawType: DrawType.Fill
     });
     textRender.textRightAlign = true;
     return textRender;
@@ -65,16 +65,22 @@ chain.push(params => new ImageRender(context, {
         { x: smallPriceResult.getLeftTopPos().x, y: smallPriceResult.getCenterPos().y + 2 },
         { x: smallPriceResult.getRightBottomPos().x, y: smallPriceResult.getCenterPos().y + 2 }
     ];
-    data.stroke = { color: "#999" };
-    data.lineWidth = 0.5;
+    data.stroke = { color: "gray" };
+    data.drawType = DrawType.Stroke;
+    data.lineWidth = .8;
     return new LineRender(context, data);
 }).push(params => {
+    const largePriceResult = params.chain.getRenderResultById("large-price");
+    const posY = largePriceResult.result.getRightBottomPos().y + 15;
     const data: DrawLine = new DrawLine();
     data.positions = [{
-        x: 0, y: 0
+        x: 5, y: posY
     }, {
-        x: 10, y: 10
+        x: context.canvas.width - 5, y: posY
     }];
+    data.drawType = DrawType.Stroke;
+    data.lineWidth = 1;
+    data.stroke = { color: "#ddd" };
     return new LineRender(context, data);
 }, "splitor");
 

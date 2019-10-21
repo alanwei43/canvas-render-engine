@@ -24,3 +24,7 @@ export enum DrawType {
     Fill,
     None
 }
+export class StrokeFillStyleMix {
+    fill?: FillStyle
+    stroke?: StrokeStyle
+}

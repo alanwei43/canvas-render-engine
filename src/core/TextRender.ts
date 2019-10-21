@@ -16,6 +16,9 @@ export class TextRender extends CoreRender<DrawText, RenderCoordsResult> {
         if (this.data.drawType === DrawType.Fill) {
             this.context.fillText(this.data.font.text, this.data.pos.x, destY);
         }
+        if (this.data.drawType === DrawType.Stroke) {
+            this.context.strokeText(this.data.font.text, this.data.pos.x, destY);
+        }
         const result: RenderCoordsResult = {
             success: true,
             result: new CoordinateData({

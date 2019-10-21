@@ -1,4 +1,4 @@
-import { FontStyle, FillStyle, StrokeStyle } from "../models/Draw";
+import { FontStyle, FillStyle, StrokeStyle, StrokeFillStyleMix, DrawType } from "../models/index";
 import { IRender } from "./IRender";
 
 export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
@@ -7,8 +7,8 @@ export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
 
     abstract doRender(): Promise<TResult>
     public async render(): Promise<TResult> {
-        console.log(typeof this.data);
         const renderResult: TResult = await this.doRender();
+
         return renderResult;
     }
 
