@@ -1,5 +1,5 @@
 import { CoreRender } from "./CoreRender";
-import { RenderCoordsResult, DrawLine, DrawType } from "../models/index";
+import { RenderCoordsResult, DrawLine, DrawType, CoordinateData } from "../models/index";
 
 export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
     doRender(): Promise<RenderCoordsResult> {
@@ -18,6 +18,7 @@ export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
             }
         });
         if (this.data.closePath) {
+            console.log("this.data.closePath: ", this.data.closePath);
             this.context.closePath();
         }
 
@@ -27,6 +28,32 @@ export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
         if (this.data.drawType === DrawType.Stroke) {
             this.context.stroke();
         }
-        return Promise.resolve(new RenderCoordsResult());
+        let minPosX = 0, minPosY = 0, maxPosX = 0, maxPosY = 0;
+        this.data.positions.forEach(pos => {
+            if (pos.x < minPosX) {
+                minPosX = pos.x;
+            }
+            if (pos.x > maxPosX) {
+                maxPosX = pos.x;
+            }
+
+            if (pos.y < minPosY) {
+                minPosY = pos.y;
+            }
+            if (pos.y > maxPosY) {
+                maxPosY = pos.y;
+            }
+        });
+
+        const renderResult = new RenderCoordsResult();
+        renderResult.success = true;
+        renderResult.result = CoordinateData.init({
+            x: minPosX,
+            y: minPosY
+        }, {
+            x: maxPosX,
+            y: maxPosY
+        });
+        return Promise.resolve(renderResult);
     }
 }
