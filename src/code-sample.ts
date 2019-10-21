@@ -1,5 +1,5 @@
-import { RectRender, TextRender, ImageRender, CoreRender, LineRender, IRender, RenderChain } from "./core/index";
-import { CoordinateData, RenderCoordsResult, DrawImage, DrawLine, DrawRect, DrawText, DrawType, TextAlignType, PositionData } from "./models/index";
+import { RectRender, TextRender, ImageRender, LineRender, RenderChain } from "./core/index";
+import { CoordinateData, RenderCoordsResult, DrawLine, DrawRect, DrawText, DrawType, TextAlignType } from "./models/index";
 
 const canvas1: HTMLCanvasElement = document.querySelector("#canvas1");
 const context = canvas1.getContext("2d");
