@@ -1,4 +1,4 @@
-import { PositionData, FontStyle, FillStyle, DrawType, StrokeStyle, StrokeFillStyleMix } from "./Draw";
+import { PositionData, FontStyle, DrawType, StrokeFillStyleMix } from "./Draw";
 export class DrawText extends StrokeFillStyleMix {
     pos: PositionData
     font: FontStyle

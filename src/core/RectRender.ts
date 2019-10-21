@@ -3,8 +3,8 @@ import { RenderCoordsResult, DrawRect, CoordinateData, DrawType } from "../model
 export class RectRender extends CoreRender<DrawRect, RenderCoordsResult> {
     async doRender(): Promise<RenderCoordsResult> {
         return new Promise((resolve, reject) => {
-            this.updateFillStyle(this.data.fill);
-            this.updateStrokeStyle(this.data.stroke)
+            this.updateFillStyle(this.data.fillStyle);
+            this.updateStrokeStyle(this.data.strokeStyle)
             
             if (this.data.drawType === DrawType.Fill) {
                 this.context.fillRect(this.data.pos.x, this.data.pos.y, this.data.size.width, this.data.size.height);

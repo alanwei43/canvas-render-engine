@@ -1,4 +1,4 @@
-import { FontStyle, FillStyle, StrokeStyle, StrokeFillStyleMix, DrawType } from "../models/index";
+import { FontStyle, StrokeFillStyleMix, DrawType } from "../models/index";
 import { IRender } from "./IRender";
 
 export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
@@ -31,16 +31,16 @@ export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
         }
         this.context.font = value;
     }
-    protected updateFillStyle(fill: FillStyle): boolean {
+    protected updateFillStyle(fill: string): boolean {
         if (fill) {
-            this.context.fillStyle = fill.color;
+            this.context.fillStyle = fill;
             return true;
         }
         return false;
     }
-    protected updateStrokeStyle(stroke: StrokeStyle): boolean {
+    protected updateStrokeStyle(stroke: string): boolean {
         if (stroke) {
-            this.context.strokeStyle = stroke.color;
+            this.context.strokeStyle = stroke;
             return true;
         }
         return false;

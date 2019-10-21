@@ -3,8 +3,8 @@ import { RenderCoordsResult, DrawLine, DrawType } from "../models/index";
 
 export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
     doRender(): Promise<RenderCoordsResult> {
-        this.updateFillStyle(this.data.fill);
-        this.updateStrokeStyle(this.data.stroke)
+        this.updateFillStyle(this.data.fillStyle);
+        this.updateStrokeStyle(this.data.strokeStyle)
 
         if (typeof this.data.lineWidth === "number") {
             this.context.lineWidth = this.data.lineWidth;

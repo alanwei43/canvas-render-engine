@@ -31,7 +31,7 @@ chain.push(params => new ImageRender(context, {
     const data = new DrawRect();
     data.pos = logoResult.pos;
     data.size = logoResult.size;
-    data.stroke = { color: "gray" };
+    data.strokeStyle = "gray";
     return new RectRender(context, data);
 }, "rect").push(params => {
     const response = params.chain.getRenderResultById("title");
@@ -39,7 +39,7 @@ chain.push(params => new ImageRender(context, {
     const textRender = new TextRender(context, {
         pos: { x: pos.x, y: pos.y + 10 },
         font: { text: "18.00万", size: 12, family: "sans-serif" },
-        fill: { color: "gray" },
+        fillStyle: "gray",
         drawType: DrawType.Fill
     });
     textRender.textRightAlign = true;
@@ -53,7 +53,7 @@ chain.push(params => new ImageRender(context, {
     const textRender = new TextRender(context, {
         pos: { x: smallPricePos.x - 5, y: titlePos.y + 5 },
         font: { text: "12.48万", size: 18, family: "sans-serif" },
-        fill: { color: "red" },
+        fillStyle: "red",
         drawType: DrawType.Fill
     });
     textRender.textRightAlign = true;
@@ -65,7 +65,7 @@ chain.push(params => new ImageRender(context, {
         { x: smallPriceResult.getLeftTopPos().x, y: smallPriceResult.getCenterPos().y + 2 },
         { x: smallPriceResult.getRightBottomPos().x, y: smallPriceResult.getCenterPos().y + 2 }
     ];
-    data.stroke = { color: "gray" };
+    data.strokeStyle = "gray";
     data.drawType = DrawType.Stroke;
     data.lineWidth = .8;
     return new LineRender(context, data);
@@ -80,7 +80,7 @@ chain.push(params => new ImageRender(context, {
     }];
     data.drawType = DrawType.Stroke;
     data.lineWidth = 1;
-    data.stroke = { color: "#ddd" };
+    data.strokeStyle = "#ddd";
     return new LineRender(context, data);
 }, "splitor");
 

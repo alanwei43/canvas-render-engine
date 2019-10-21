@@ -4,7 +4,7 @@ export class TextRender extends CoreRender<DrawText, RenderCoordsResult> {
     textRightAlign: boolean = false
     async doRender(): Promise<RenderCoordsResult> {
         this.updateFont(this.data.font);
-        this.updateFillStyle(this.data.fill);
+        this.updateFillStyle(this.data.fillStyle);
 
         const textWidth = this.context.measureText(this.data.font.text).width;
         if (this.textRightAlign) {

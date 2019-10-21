@@ -2,13 +2,6 @@ export interface PositionData {
     x: number
     y: number
 }
-export interface FillStyle {
-    color: string
-}
-export interface StrokeStyle {
-    color: string
-}
-
 export interface FontStyle {
     size?: number
     family?: string
@@ -25,6 +18,6 @@ export enum DrawType {
     None
 }
 export class StrokeFillStyleMix {
-    fill?: FillStyle
-    stroke?: StrokeStyle
+    fillStyle?: string
+    strokeStyle?: string
 }

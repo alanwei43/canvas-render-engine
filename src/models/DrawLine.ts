@@ -1,4 +1,4 @@
-import { PositionData, StrokeStyle, FillStyle, DrawType, StrokeFillStyleMix } from "./Draw";
+import { PositionData, DrawType, StrokeFillStyleMix } from "./Draw";
 
 export class DrawLine extends StrokeFillStyleMix {
     positions: PositionData[]
