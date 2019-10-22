@@ -1,4 +1,4 @@
-import { IRender } from "./IRender";
+import { IRender } from "./core/IRender";
 import { ChainItem, RenderChainParams } from "../models/index";
 
 export class RenderChain<TResult> {

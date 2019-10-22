@@ -1,4 +1,4 @@
-import { FontStyle, StrokeFillStyleMix, DrawType } from "../models/index";
+import { FontStyle, StrokeFillStyleMix, DrawType } from "../../models/index";
 import { IRender } from "./IRender";
 
 export abstract class CoreRender<TData, TResult> implements IRender<TResult> {

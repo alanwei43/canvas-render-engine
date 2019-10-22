@@ -1,5 +1,5 @@
-import { CoreRender } from "./CoreRender";
-import { RenderCoordsResult, DrawLine, DrawType, CoordinateData } from "../models/index";
+import { CoreRender } from "../core/CoreRender";
+import { RenderCoordsResult, DrawLine, DrawType, CoordinateData } from "../../models/index";
 
 export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{
     doRender(): Promise<RenderCoordsResult> {

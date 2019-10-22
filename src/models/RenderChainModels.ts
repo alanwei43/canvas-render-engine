@@ -1,4 +1,4 @@
-import { RenderChain, IRender } from "../core/index";
+import { RenderChain, IRender } from "../lib/index";
 
 export interface RenderChainParams<TResult> {
     chain: RenderChain<TResult>;

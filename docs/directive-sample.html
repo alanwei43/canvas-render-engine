@@ -8,6 +8,8 @@
     <title>Canvas Sample</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             background-color: rgba(0, 100, 255, .5);
         }
 
@@ -21,8 +23,9 @@
 <body>
     <canvas id="canvas1" width="300" height="400"></canvas>
     <template id="canvas-temp">
-        <img id="main-image" src="./resources/280TSI.jpg" src-coords-pos="return {x:0, y:0}" dest-coords-pos="return {x: 0, y: 0}" dest-coords-size="return {width: 300, height: 225 }" />
-        <img id="logo" src-coords-pos="return {x:0, y:0}" dest-coords-pos="return {x: 10, y: 8}" src="http://vw.faw-vw.com/content/dam/vw-ngw/faw-vw/homepage/site_logo/pc_logo.png" />
+        <img @id:string="main-image" string:src="./resources/280TSI.jpg" (src-coords-pos)="return {x:0, y:0}" dest-coords-pos="return {x: 0, y: 0}" dest-coords-size="return {width: 300, height: 225 }" />
+        <img string:id="logo" src-coords-pos="return {x:0, y:0}" dest-coords-pos="return {x: 10, y: 8}" src="http://vw.faw-vw.com/content/dam/vw-ngw/faw-vw/homepage/site_logo/pc_logo.png" />
+        <text pos=" const data = this.getResultById('main-image'); return data.getLeftBottomPos()" font-size="14" font-family="sans-serif" color="green" margin-right="5">大众 凌渡 280TSI DSG舒适版国VI</text>
     </template>
     <script src="./directive-sample.js"></script>
 </body>
