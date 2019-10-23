@@ -10,3 +10,4 @@ export * from "./RenderChain";
 export * from "./RenderDirectives";
 export * from "./directives/ElementConverter";
 export * from "./directives/FunctionContext";
+export * from "./utils/Log";
