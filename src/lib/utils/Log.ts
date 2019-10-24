@@ -3,14 +3,17 @@ export class Log {
     constructor(logger: string) {
         this.logger = logger;
     }
-    debug(txt: any) {
-        console.log(`[${this.logger}] `, txt);
+    debug(...args: any[]) {
+        args.unshift(`[${this.logger}] `);
+        console.log.apply(window, args);
     }
-    warn(txt: any) {
-        console.warn(`[${this.logger}] `, txt);
+    warn(...args: any[]) {
+        args.unshift(`[${this.logger}] `);
+        console.warn.apply(window, args);
     }
-    error(txt: any) {
-        console.error(`[${this.logger}] `, txt);
+    error(...args: any[]) {
+        args.unshift(`[${this.logger}] `)
+        console.error.apply(window, args);
     }
     static init(logger: string) {
         return new Log(logger);

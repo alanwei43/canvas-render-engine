@@ -1,4 +1,4 @@
-import { RectRender, TextRender, ImageRender, LineRender, RenderChain, RenderDirectives } from "./lib/index";
+import { RectRender, TextRender, ImageRender, LineRender, RenderChain, RenderDirectives, Logger } from "./lib/index";
 import { CoordinateData, RenderCoordsResult, DrawLine, DrawRect, DrawText, DrawType, TextAlignType, PositionData } from "./models/index";
 
 

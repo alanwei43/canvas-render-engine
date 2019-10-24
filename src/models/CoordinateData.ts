@@ -11,19 +11,19 @@ export class CoordinateData {
     private getSize(): SizeData {
         return this.size || { height: 0, width: 0 };
     }
-    getLeftTopPos(): PositionData {
+    leftTop(): PositionData {
         return this.pos;
     }
-    getLeftBottomPos(): PositionData {
+    leftBottom(): PositionData {
         return { x: this.pos.x, y: this.pos.y + this.getSize().height };
     }
-    getRightTopPos(): PositionData {
+    rightTop(): PositionData {
         return { x: this.pos.x + this.getSize().width, y: this.pos.y };
     }
-    getRightBottomPos(): PositionData {
+    rightBottom(): PositionData {
         return { x: this.pos.x + this.getSize().width, y: this.pos.y + this.getSize().height };
     }
-    getCenterPos(): PositionData {
+    center(): PositionData {
         return { x: this.pos.x + (this.size.width / 2), y: this.pos.y + (this.size.height / 2) };
     }
     increaseX(value: number): CoordinateData {
@@ -42,10 +42,10 @@ export class CoordinateData {
         return JSON.stringify({
             pos: this.pos,
             size: this.size,
-            leftTopPos: this.getLeftTopPos(),
-            leftBottomPos: this.getLeftBottomPos(),
-            rightBottomPos: this.getRightBottomPos(),
-            rightTopPos: this.getRightTopPos()
+            leftTopPos: this.leftTop(),
+            leftBottomPos: this.leftBottom(),
+            rightBottomPos: this.rightBottom(),
+            rightTopPos: this.rightTop()
         }, null, "\t");
     }
 }

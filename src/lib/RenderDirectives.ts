@@ -1,8 +1,10 @@
 import { ImageRender, RenderChain } from "./index";
-import { PositionData, CoordinateData, RenderCoordsResult, SizeData, DrawText, DrawType, TextAlignType, DrawImage } from "../models/index";
+import { PositionData, CoordinateData, RenderCoordsResult, SizeData, DrawText, DrawType, TextAlignType, DrawImage, DrawLine } from "../models/index";
 import { TextRender } from "./index";
 import { ElementConverter } from "./directives/ElementConverter";
 import { Logger } from "./utils/Log";
+import { FunctionContext } from "./directives/FunctionContext";
+import { LineRender } from "./renders/LineRender";
 
 export class RenderDirectives {
     private context: CanvasRenderingContext2D
@@ -26,18 +28,33 @@ export class RenderDirectives {
             elements = elements;
         }
 
-        const converter = new ElementConverter();
         this.chain = new RenderChain<RenderCoordsResult>();
+        const converter = new ElementConverter(new FunctionContext(this.chain, this.context));
         elements.forEach(element => {
             const id = element.getAttribute("id");
             if (element.nodeName === "IMG") {
-                console.log("start")
-                const data = new DrawImage();
-                console.log("data: ", data);
-                converter.generateAttributes(element, data);
-                console.log("end")
                 this.chain.push(params => {
+                    Logger.debug("image element: ", id);
+                    const data = new DrawImage();
+                    converter.generateAttributes(element, data);
                     return new ImageRender(this.context, data);
+                }, id);
+            }
+            if (element.nodeName === "TEXT") {
+                this.chain.push(params => {
+                    Logger.debug("text element: ", id);
+                    const data = new DrawText();
+                    data.font = { text: element.textContent };
+                    converter.generateAttributes(element, data);
+                    return new TextRender(this.context, data);
+                }, id);
+            }
+            if (element.nodeName === "PATH") {
+                this.chain.push(params => {
+                    Logger.debug("path element: ", id);
+                    const data = new DrawLine();
+                    converter.generateAttributes(element, data);
+                    return new LineRender(this.context, data);
                 }, id);
             }
         });

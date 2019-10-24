@@ -23,11 +23,15 @@
 <body>
     <canvas id="canvas1" width="300" height="400"></canvas>
     <template id="canvas-temp">
-        <img data:id:string="main-image" data:src:string="./resources/280TSI.jpg" expr:src-coords.pos="{x:0, y:0}" expr:dest-coords.pos="{x:100, y:100}" expr:dest-coords.size="{width: 50, height: 50}" />
+        <img id="main-image" @src="./resources/280TSI.jpg" expr:src-coords.pos="{x:0, y:0}" expr:dest-coords.pos="{x:10, y:10}" $dest-coords.size="{width: canvas.width, height: canvas.width / 1.3 }" />
+        <img id="logo" $src-coords.pos="{x:0, y:0}" $dest-coords.pos="{x: 10, y: 8}" @src="http://vw.faw-vw.com/content/dam/vw-ngw/faw-vw/homepage/site_logo/pc_logo.png" />
+        <text id="title" $pos="{ y: posRightBottom('main-image').y, x: 5}" @font.align:number="1" @font.size:number="14" @font.family="sans-serif" @draw-type:number="1">大众 凌渡 280TSI DSG舒适版国VI</text>
+        <text id="small-price" @fill-style="gray" $pos="{ y: posRightBottom('title').y + 15, x: 5}" @font.align:number="1" @font.size:number="12" @font.family="sans-serif" @draw-type:number="1">18.00万</text>
+        <text id="large-price" @fill-style="red" $pos="{ y: posRightBottom('title').y + 10, x: 10 + size('small-price').width}" @font.align:number="1" @font.size:number="18" @font.family="sans-serif" @draw-type:number="1">12.48万</text>
+        <text id="sub-title" @fill-style="#F5594E" $pos="{ x: 5, y: posRightBottom('small-price').y + 10 }" @font-family="Helvetica" @font-align:number="1" @font-size:number="12" @draw-type:number="1">总优惠可达5.63万  低于同城4S店报价1.83万</text>
+        <path id="path1" $positions="[{ x: posLeftTop('small-price').x, y: posCenter('small-price').y + 2 }, { x: posRightBottom('small-price').x, y: posCenter('small-price').y + 2 }]" @draw-type:number="0" @stroke-style="gray" @line-width:number="0.8" />
     </template>
 
-    <!-- <img string:id="logo" src-coords-pos="return {x:0, y:0}" dest-coords-pos="return {x: 10, y: 8}" src="http://vw.faw-vw.com/content/dam/vw-ngw/faw-vw/homepage/site_logo/pc_logo.png" /> -->
-    <!-- <text pos=" const data = this.getResultById('main-image'); return data.getLeftBottomPos()" font-size="14" font-family="sans-serif" color="green" margin-right="5">大众 凌渡 280TSI DSG舒适版国VI</text> -->
     <script src="./directive-sample.js"></script>
 </body>
 

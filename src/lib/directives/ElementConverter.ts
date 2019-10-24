@@ -7,11 +7,10 @@ enum FieldNameType {
 }
 
 export class ElementConverter {
-    private chain: RenderChain<RenderCoordsResult>
     private context: FunctionContext
 
-    constructor() {
-        this.context = new FunctionContext();
+    constructor(context: FunctionContext) {
+        this.context = context;
     }
 
     private getFieldNameAndType(attrName: string): { fieldName: string, valueType: FieldNameType } {
@@ -30,7 +29,7 @@ export class ElementConverter {
          * $ => with
          * with:field-name => with
          */
-        const matches = /^(@|data|expr|func|with):([^:]+)(:[a-z]+)?/.exec(attrName);
+        const matches = /^(@|data:|expr:|func:|\$|with:)([^:]+)(:[a-z]+)?/.exec(attrName);
         if (!matches || !matches.length) {
             return null;
         }
@@ -40,27 +39,32 @@ export class ElementConverter {
             valueType: FieldNameType.string
         };
 
-        if (fieldType === "data" || fieldType === "@") {
+        Logger.debug(`${attrName} => field type: ${fieldType}, return type: ${returnType}`);
+        if (fieldType === "data:" || fieldType === "@") {
             let valueType = FieldNameType.string;
             switch (returnType) {
-                case "string": valueType = FieldNameType.string; break;
-                case "number": valueType = FieldNameType.number; break;
-                case "boolean": valueType = FieldNameType.boolean; break;
+                case ":string": valueType = FieldNameType.string; break;
+                case ":number": valueType = FieldNameType.number; break;
+                case ":boolean": valueType = FieldNameType.boolean; break;
             }
             result.valueType = valueType;
             return result;
         }
-        if (fieldType === "expr") {
+        if (fieldType === "expr:") {
             result.valueType = FieldNameType.expression;
             return result;
         }
-        if (fieldType === "function") {
+        if (fieldType === "func") {
             result.valueType = FieldNameType.function;
+            return result;
+        }
+        if (fieldType === "$" || fieldType === "with:") {
+            result.valueType = FieldNameType.with;
             return result;
         }
         return null;
     }
-    private fieldNameSlashConvert(name: string): string {
+    private convertFieldNameHyphen(name: string): string {
         const parts = name.split("-");
         return parts.splice(1, parts.length - 1).reduce((prev, next) => {
             prev += next[0].toUpperCase() + next.substr(1);
@@ -68,7 +72,6 @@ export class ElementConverter {
         }, parts[0]);
     }
     private calculateFieldValue(valueLiteral: string, valueType: FieldNameType): any {
-        Logger.debug(`calculate field value: ${valueLiteral} to type ${valueType}`)
         if (valueType === FieldNameType.boolean) {
             return valueLiteral === "false" || valueLiteral === "0" ? false : true;
         }
@@ -85,23 +88,25 @@ export class ElementConverter {
         if (valueType === FieldNameType.expression) {
             return this.calculateFieldValue(`return (${valueLiteral});`, FieldNameType.function);
         }
+        if (valueType === FieldNameType.with) {
+            return this.calculateFieldValue(`with(this) { return  ${valueLiteral}; }`, FieldNameType.function);
+        }
         Logger.warn(`invalid field type: ${valueType}, for value: ${valueLiteral}`);
         return null;
     }
     private updateObjValue(data: any, key: string, value: any): void {
-        Logger.debug(`ready update obj[${key}] = ${value}`);
-        const parts = key.split(".").map(key => this.fieldNameSlashConvert(key));
-        Logger.debug(`property parts: ${parts.join(" -> ")} `);
+        Logger.debug(`ready update data`, data, `, the key of [${key}] to `, value);
+        const parts = key.split(".").map(key => this.convertFieldNameHyphen(key));
+        Logger.debug(`property parts path: ${parts.join(" -> ")} `);
         const latestPartObj = parts.splice(0, parts.length - 1).reduce((prev, next) => {
-
-            Logger.debug(`update obj key of ${next}`);
+            Logger.debug(`update key ${next}`);
             if (prev[next] === null || prev[next] === undefined) {
                 prev[next] = {};
             }
             return prev[next];
         }, data);
         latestPartObj[parts[0]] = value;
-        Logger.debug(`complete update obj[${key}] = ${value}`);
+        Logger.debug(`complete update: `, data);
     }
     generateAttributes<TData>(element: HTMLElement, data: TData): TData {
         element.getAttributeNames().forEach(attrName => {
@@ -113,10 +118,12 @@ export class ElementConverter {
             Logger.debug(`valid attr name is ${fieldNameAndType.fieldName}, type is ${fieldNameAndType.valueType}`);
 
             const attrValue: string = element.getAttribute(attrName);
+            Logger.debug(`value ${attrValue} of ${attrName} to type: ${fieldNameAndType.valueType}`);
             const fieldValue = this.calculateFieldValue(attrValue, fieldNameAndType.valueType);
-            Logger.debug(`the value of ${fieldNameAndType.fieldName} is ${fieldValue}`);
+            Logger.debug(`the value of ${fieldNameAndType.fieldName} is: `, fieldValue);
             this.updateObjValue(data, fieldNameAndType.fieldName, fieldValue);
         });
+        Logger.debug("generateAttributes result: ", data);
         return data;
     }
 }

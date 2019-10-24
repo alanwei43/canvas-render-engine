@@ -18,7 +18,7 @@ chain.push(params => new ImageRender(context, {
     });
 }, "logo").push(params => {
     const response = chain.getRenderResultById("main-image");
-    const pos = response.result.getRightBottomPos();
+    const pos = response.result.rightBottom();
     const textRender = new TextRender(context, {
         pos: { x: 5, y: pos.y + 12 },
         font: { text: "大众 凌渡 280TSI DSG舒适版国VI", size: 14, family: "sans-serif", align: TextAlignType.Right },
@@ -34,7 +34,7 @@ chain.push(params => new ImageRender(context, {
     return new RectRender(context, data);
 }, "rect").push(params => {
     const response = params.chain.getRenderResultById("title");
-    const pos = response.result.getRightBottomPos();
+    const pos = response.result.rightBottom();
     const textRender = new TextRender(context, {
         pos: { x: 5, y: pos.y + 10 },
         font: { text: "18.00万", size: 12, family: "sans-serif", align: TextAlignType.Right },
@@ -45,7 +45,7 @@ chain.push(params => new ImageRender(context, {
 }, "small-price").push(params => {
     const smallPriceResult = params.chain.getRenderResultById("small-price").result;
     const titleResult = params.chain.getRenderResultById("title").result;
-    const titlePos = titleResult.getRightBottomPos();
+    const titlePos = titleResult.rightBottom();
 
     const textRender = new TextRender(context, {
         pos: { x: smallPriceResult.size.width + 10, y: titlePos.y + 5 },
@@ -58,8 +58,8 @@ chain.push(params => new ImageRender(context, {
     const smallPriceResult = params.chain.getRenderResultById("small-price").result;
     const data: DrawLine = new DrawLine();
     data.positions = [
-        { x: smallPriceResult.getLeftTopPos().x, y: smallPriceResult.getCenterPos().y + 2 },
-        { x: smallPriceResult.getRightBottomPos().x, y: smallPriceResult.getCenterPos().y + 2 }
+        { x: smallPriceResult.leftTop().x, y: smallPriceResult.center().y + 2 },
+        { x: smallPriceResult.rightBottom().x, y: smallPriceResult.center().y + 2 }
     ];
     data.strokeStyle = "gray";
     data.drawType = DrawType.Stroke;
@@ -69,7 +69,7 @@ chain.push(params => new ImageRender(context, {
     const renderResult = params.chain.getRenderResultById("small-price").result;
     const data: DrawText = {
         drawType: DrawType.Fill,
-        pos: { x: 5, y: renderResult.getRightBottomPos().y + 10 },
+        pos: { x: 5, y: renderResult.rightBottom().y + 10 },
         fillStyle: "#F5594E",
         font: {
             size: 10,
@@ -81,7 +81,7 @@ chain.push(params => new ImageRender(context, {
     return new TextRender(context, data);
 }, "sub-title").push(params => {
     const largePriceResult = params.chain.getRenderResultById("sub-title");
-    const posY = largePriceResult.result.getRightBottomPos().y + 15;
+    const posY = largePriceResult.result.rightBottom().y + 15;
     const data: DrawLine = new DrawLine();
     data.positions = [{
         x: 5, y: posY
@@ -94,7 +94,7 @@ chain.push(params => new ImageRender(context, {
     return new LineRender(context, data);
 }, "splitor").push(params => {
     const renderResult = params.chain.getRenderResultById("splitor");
-    const baseY = renderResult.result.getRightBottomPos().y + 15;
+    const baseY = renderResult.result.rightBottom().y + 15;
     const baseX = 5;
     const perWidth = context.canvas.width / 4;
     const data: DrawLine = new DrawLine();
@@ -148,7 +148,7 @@ chain.push(params => new ImageRender(context, {
         src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8CAYAAACrHtS+AAADFklEQVR4nO2WS27FMAwDc/9Lt/ugBeSQluhkCHinD8XJA951XddPwlNUnef24t7b9MYNABzgawI4wKXgp/aOAO+QEpRSV+11f7juD1y8LcNIR121F+ANRjrqqr0AbzDSUVftBXiDkY66au/ngb85gA5/yl53zgBv8AdwgJfrAC4I4ABv8QfwrACsOw64N8PIYAAAnzAyGADAJ4wMBgDwCSODAQB8wog7vI55h37gGUaqAjjAy71TXgAO8HIdwAG+H7hb7gCSepV73QI4wAHu7lXudQvgAAe4u1e5160S8KmnBHVi3eAbN3AEIIADHOAABzjA04D/6TBY7o+qukOpS1K+w5sArinf4U0A15Tv8CaAa8p3eBPANV1KgE9DntrRIbe/DXUAdwrgRXMABzjA99QB3KnjgCvDFCk73B9axx2DewEO8M3m3DsADvByHcAbzLl3ANz8L33D0pG6am/6E+8A+GlPvAPgpz3xDoCf9sQ7AH7aE+/wLVXUsde9ww3ILYADHOAAB3jLPIADXLptwZ8PeMexU/46PLv9ARzgAHfvUOYBXDjW7Q/g5kDd4bn9fQq4clhH75Q67t1QB/CnAjjA7b0ADxLAAW7v3Q68Oiz92K95XugH+Bs8A/xjngH+Mc8A/5jnGOAdAaTDTdoBcLPn9B0AN3tO3wFws+f0HQA3e07fUQK+MOwVMBQvHbmI+QH8qQAOcIADHOAAnwTuOn6H3AFMAVLutf9gJIebBXCA2+sAHiSAA9xe9zngHSE8NZwUcrXXXbfhzcMG+JoXgAsCOMABDvAXA+9QB7RqneLl0I8P4ADfLIDX5wFcmAdwgANcMbLBXPSHkfQW7gC4816Am4NXBHCA2+8FuDl4RQB/CXD3h6FoEGT1AdwpgBfnddR1CODFeR11HQJ4cV5HXYcAXpyn1Cmek+a5ewEePs/dC/Dwee5egIfPc/cCPHyeu/cxcLemgCu97g/cvWNhL8ArvQAXBHCAS3UdvQAXBPAg4FNPgeYOqkODWc/DBjjA/w1FCS9JAC+GooSXJIAXQ1HCS9JUzr/WYmyK3t9blgAAAABJRU5ErkJggg==",
         srcCoords: new CoordinateData({ x: 0, y: 0 }),
         destCoords: new CoordinateData({
-            x: renderResult.getLeftBottomPos().x + 5, y: renderResult.getLeftBottomPos().y
+            x: renderResult.leftBottom().x + 5, y: renderResult.leftBottom().y
         }, {
             width: 70,
             height: 70
