@@ -28,30 +28,34 @@ export class RenderDirectives {
             elements = elements;
         }
 
+        Logger.debug(`总共接收到${elements.length}个元素`);
+
         this.chain = new RenderChain<RenderCoordsResult>();
         const converter = new ElementConverter(new FunctionContext(this.chain, this.context));
-        elements.forEach(element => {
+        elements.forEach((element, index) => {
             const id = element.getAttribute("id");
-            if (element.nodeName === "IMG") {
+            const renderType = element.getAttribute("type") || element.nodeName.toLowerCase();
+            Logger.debug(`第${index + 1}个元素, id: ${id}, render type: ${renderType}`);
+            if (renderType === "img") {
                 this.chain.push(params => {
-                    Logger.debug("image element: ", id);
+                    Logger.debug(`[${id}] 返回 ImageRender`);
                     const data = new DrawImage();
                     converter.generateAttributes(element, data);
                     return new ImageRender(this.context, data);
                 }, id);
             }
-            if (element.nodeName === "TEXT") {
+            if (renderType === "text") {
                 this.chain.push(params => {
-                    Logger.debug("text element: ", id);
+                    Logger.debug(`[${id}] 返回 TextRender`);
                     const data = new DrawText();
                     data.font = { text: element.textContent };
                     converter.generateAttributes(element, data);
                     return new TextRender(this.context, data);
                 }, id);
             }
-            if (element.nodeName === "PATH") {
+            if (renderType === "path") {
                 this.chain.push(params => {
-                    Logger.debug("path element: ", id);
+                    Logger.debug(`[${id}] 返回 LineRender`);
                     const data = new DrawLine();
                     converter.generateAttributes(element, data);
                     return new LineRender(this.context, data);

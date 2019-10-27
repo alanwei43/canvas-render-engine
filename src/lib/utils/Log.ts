@@ -1,19 +1,21 @@
+let globalCount: number = 0
 export class Log {
     private logger: string
     constructor(logger: string) {
         this.logger = logger;
     }
+    private getLogTxt(args: any[]): any[] {
+        args.unshift(`${globalCount++} [${this.logger}]`);
+        return args;
+    }
     debug(...args: any[]) {
-        args.unshift(`[${this.logger}] `);
-        console.log.apply(window, args);
+        console.log.apply(window, this.getLogTxt(args));
     }
     warn(...args: any[]) {
-        args.unshift(`[${this.logger}] `);
-        console.warn.apply(window, args);
+        console.warn.apply(window, this.getLogTxt(args));
     }
     error(...args: any[]) {
-        args.unshift(`[${this.logger}] `)
-        console.error.apply(window, args);
+        console.error.apply(window, this.getLogTxt(args));
     }
     static init(logger: string) {
         return new Log(logger);

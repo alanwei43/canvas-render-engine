@@ -1,9 +1,12 @@
 import { PositionData, SizeData } from "./Draw";
+import { Log } from "../lib/index";
 
 export class CoordinateData {
+    private logger: Log = Log.init("CoordinateData");
     constructor(start: PositionData, size?: SizeData) {
         this.pos = start;
         this.size = size;
+        this.logger.debug("pos: ", this.pos, ", size: ", this.size);
     }
     pos: PositionData
     size: SizeData

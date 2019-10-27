@@ -1,5 +1,6 @@
 import { RenderChain } from "../index";
 import { RenderCoordsResult, CoordinateData, RenderResult, SizeData, PositionData } from "../../models/index";
+import { Logger } from "../utils/Log";
 
 export class FunctionContext {
     private chain: RenderChain<RenderCoordsResult>
@@ -10,6 +11,7 @@ export class FunctionContext {
     }
     getCoors(id: string): CoordinateData {
         const result = this.chain.getRenderResultById(id).result;
+        Logger.debug(`获取${id}对应的 CoordinateData 数据, pos: `, result);
         return new CoordinateData(result.pos, result.size);
     }
     get canvas(): SizeData {
