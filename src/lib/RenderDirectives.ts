@@ -1,10 +1,5 @@
-import { ImageRender, RenderChain } from "./index";
-import { PositionData, CoordinateData, RenderCoordsResult, SizeData, DrawText, DrawType, TextAlignType, DrawImage, DrawLine } from "../models/index";
-import { TextRender } from "./index";
-import { ElementConverter } from "./directives/ElementConverter";
-import { Logger } from "./utils/Log";
-import { FunctionContext } from "./directives/FunctionContext";
-import { LineRender } from "./renders/LineRender";
+import { ImageRender, RenderChain, ElementConverter, Logger, FunctionContext, TextRender, LineRender } from "./index";
+import { RenderCoordsResult, DrawText, DrawImage, DrawLine } from "../models/index";
 
 export class RenderDirectives {
     private context: CanvasRenderingContext2D

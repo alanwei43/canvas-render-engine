@@ -1,6 +1,4 @@
-import { RenderChain, Logger } from "../index";
-import { RenderCoordsResult } from "../../models/index";
-import { FunctionContext } from "./FunctionContext";
+import { Logger, FunctionContext } from "../index";
 
 enum FieldNameType {
     string, number, boolean, function, expression, with

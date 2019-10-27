@@ -1,4 +1,4 @@
-import { CoreRender } from "../core/CoreRender";
+import { CoreRender } from "../index";
 import { RenderCoordsResult, DrawLine, DrawType, CoordinateData } from "../../models/index";
 
 export class LineRender extends CoreRender<DrawLine, RenderCoordsResult>{

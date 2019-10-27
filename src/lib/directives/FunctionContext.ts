@@ -1,6 +1,5 @@
-import { RenderChain } from "../index";
-import { RenderCoordsResult, CoordinateData, RenderResult, SizeData, PositionData } from "../../models/index";
-import { Logger } from "../utils/Log";
+import { RenderChain, Logger } from "../index";
+import { RenderCoordsResult, CoordinateData, SizeData, PositionData } from "../../models/index";
 
 export class FunctionContext {
     private chain: RenderChain<RenderCoordsResult>

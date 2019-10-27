@@ -1,6 +1,5 @@
 import { DrawText, RenderCoordsResult, CoordinateData, DrawType, TextAlignType } from "../../models/index";
-import { CoreRender } from "../core/CoreRender";
-import { Logger } from "../utils/Log";
+import { CoreRender, Logger } from "../index";
 export class TextRender extends CoreRender<DrawText, RenderCoordsResult> {
     async doRender(): Promise<RenderCoordsResult> {
         this.updateFont(this.data.font);

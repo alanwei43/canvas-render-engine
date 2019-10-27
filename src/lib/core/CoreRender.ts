@@ -1,5 +1,5 @@
-import { FontStyle, StrokeFillStyleMix, DrawType } from "../../models/index";
-import { IRender } from "./IRender";
+import { FontStyle } from "../../models/index";
+import { IRender } from "../index";
 
 export abstract class CoreRender<TData, TResult> implements IRender<TResult> {
     protected context: CanvasRenderingContext2D
